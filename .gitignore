@@ -1,0 +1,4 @@
+/bot/target/classes/application.properties
+/bot/target/classes/log4j.properties
+/bot/src/main/resources/application.properties
+/bot/src/main/resources/log4j.properties
