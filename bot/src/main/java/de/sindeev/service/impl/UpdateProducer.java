@@ -11,7 +11,7 @@ import de.sindeev.service.IUpdateProducer;
 @Service
 public class UpdateProducer implements IUpdateProducer {
 
-	private Logger logger = Logger.getLogger(UpdateController.class);
+	private Logger logger = Logger.getLogger(UpdateProducer.class);
 	
     private final RabbitTemplate rabbitTemplate;
 

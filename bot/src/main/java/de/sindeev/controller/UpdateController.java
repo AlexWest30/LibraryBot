@@ -31,7 +31,6 @@ public class UpdateController {
                 var message = update.getMessage();
                 if (message.hasText()) {
                     updateProducer.produce(update, RabbitMQ.UPDATE_MESSAGE);
-                    setCommandIsReceivedView(update);
                 }
             } else {
                 logger.error("Unsupported message type is received: " + update);
@@ -41,14 +40,17 @@ public class UpdateController {
     }
     
     private void setUnsupportedCommandView(Update update) {
-        var sendMessage = generateSendMessage(update,
-                "This command is not supported.");
-        bot.sendAnswer(sendMessage);
+        var sendMessage = generateSendMessage(update, "This command is not supported.");
+        setView(sendMessage);
     }
 
     private void setCommandIsReceivedView(Update update) {
         var sendMessage = generateSendMessage(update, "Your command was received.");
-        bot.sendAnswer(sendMessage);
+        setView(sendMessage);
+    }
+    
+    public void setView(SendMessage message) {
+        bot.sendAnswer(message);
     }
     
     public SendMessage generateSendMessage(Update update, String text) {

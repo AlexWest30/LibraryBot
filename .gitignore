@@ -2,3 +2,6 @@
 /bot/target/classes/log4j.properties
 /bot/src/main/resources/application.properties
 /bot/src/main/resources/log4j.properties
+/node/src/main/resources/application.properties
+/node/src/main/resources/log4j.properties
+/node/target
