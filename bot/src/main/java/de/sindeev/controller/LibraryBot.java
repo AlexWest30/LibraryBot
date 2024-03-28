@@ -11,7 +11,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-
 @Component
 public class LibraryBot extends TelegramLongPollingBot {
 
@@ -22,26 +21,23 @@ public class LibraryBot extends TelegramLongPollingBot {
 	
 	@Autowired
     private Environment env;
+	
+    private final UpdateController updateController;
+
+    public LibraryBot(UpdateController updateController) {
+    	this.updateController = updateController;
+    }
 
     @PostConstruct
     public void init() {
         setBotUsername(env.getProperty("bot.name"));
         setBotToken(env.getProperty("bot.token"));
+        updateController.registerBot(this);
     }
 	
 	@Override
 	public void onUpdateReceived(Update update) {
-		var message = update.getMessage();
-		System.out.println(message.getText());
-		logger.debug(message.getText());
-		SendMessage sendMessage = new SendMessage();
-		sendMessage.setChatId(message.getChatId().toString());	
-		sendMessage.setText(message.getText());
-		try {
-			execute(sendMessage);
-		} catch (TelegramApiException e) {
-			e.printStackTrace();
-		}
+			updateController.processUpdate(update);
 	}
 
 	@Override
@@ -53,6 +49,16 @@ public class LibraryBot extends TelegramLongPollingBot {
 	public String getBotToken() {
 		return botToken;
 	}
+	
+    public void sendAnswer(SendMessage message) {
+        if (message != null) {
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                logger.error(e);
+            }
+        }
+    }
 	
 	public void setBotUsername(String botName) {
 		this.botName = botName;

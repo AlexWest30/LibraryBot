@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>bot</module>
+		<module>message-broker</module>
 	</modules>
 
 	<properties>
