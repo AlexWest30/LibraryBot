@@ -5,7 +5,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import de.sindeev.controller.UpdateController;
 import de.sindeev.service.IUpdateProducer;
 
 @Service
@@ -21,7 +20,7 @@ public class UpdateProducer implements IUpdateProducer {
 	
 	@Override
 	public void produce(Update update, String queue) {
-        logger.debug(update.getMessage().getText());
+        logger.debug("Bot: " + update.getMessage().getText());
         rabbitTemplate.convertAndSend(queue, update);
 	}
 }
